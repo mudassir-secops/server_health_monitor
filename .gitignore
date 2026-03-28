@@ -1,2 +1,2 @@
 config.env
-*.log
+logs/*.log
