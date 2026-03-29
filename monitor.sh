@@ -13,14 +13,17 @@ timestamp() {
 	date "+%Y-%m-%d %H:%M:%S"
 }
 
+
 log() {
-	echo "$timestamp $1" >> "$REPORT_LOG"
+	echo "$(timestamp) $1" >> "$REPORT_LOG"
 }
 
+
 alert() {
-	echo "$timestamp ALERT: $1" >> "$ALERT_LOG"
+	echo "$(timestamp) ALERT: $1" >> "$ALERT_LOG"
 	log "ALERT TRIGGERED: $1"
 }
+
 
 check_disk() {
 	local usage 
@@ -95,6 +98,26 @@ check_network() {
 fi
 }
 
+
+main() {
+	echo "" >> $REPORT_LOG
+	log "============================================="
+	log "Health check started on $(hostname)"
+	log "============================================="
+
+	check_disk
+	check_service
+	check_cpu
+	check_memory
+	check_url
+	check_network
+
+	log "============================================="
+	log "Health check completed"
+	log "============================================="
+}
+
+main
 
 
 	
