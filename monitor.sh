@@ -89,7 +89,7 @@ fi
 check_network() {
 	local status
 	
-	status=$(nslookup google.com | awk 'NR==6 {print $2}' )
+	status=$(nslookup google.com | awk 'NR==6 {print $2}' || echo "" )
 
 	if [ "$status" == "" ]; then
 		alert "DNS resolution error - google.com not resolved"
